@@ -1,0 +1,31 @@
+FROM docker.io/library/debian:forky
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        neovim ca-certificates curl jq git rsync unzip \
+        fontconfig ripgrep sqlite3 build-essential \
+        wl-clipboard fd-find shellcheck shfmt python3-pip tree-sitter-cli \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd --gid 1000 nvim \
+    && useradd --uid 1000 --gid 1000 \
+        --create-home --shell /bin/bash nvim
+
+ENV HOME=/home/nvim
+WORKDIR /home/nvim
+
+USER nvim
+RUN git clone https://github.com/LazyVim/starter /home/nvim/.config/nvim \
+    && rm -rf /home/nvim/.config/nvim/.git
+
+COPY --chown=nvim:nvim nvim.config/ /home/nvim/.config/nvim/
+
+RUN nvim --headless "+Lazy! sync" +qa
+
+RUN nvim --headless \
+    -c "lua require('lazy').load({plugins={'mason.nvim'}})" \
+    -c "MasonInstall lua-language-server" \
+    -c "lua if not require('mason-registry').get_package('lua-language-server'):is_installed() then vim.cmd('cquit 1') end" \
+    -c "qa"
+
+CMD ["nvim"]
