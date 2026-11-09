@@ -1,3 +1,7 @@
+# Bugs:
+
+* run => Lazy (l) => failed section - 27 plugins failed?!?
+
 # TODO
 
 ContainerFile
