@@ -43,7 +43,7 @@ Sequences such as `C + ww` mean `Ctrl+w`, then `w`.
 
 ### Editing
 
-| Command / shortcut | Action |
+| shortcut | Action |
 | --- | --- |
 | `:e` | Edit |
 | `za` | Toggle fold |
