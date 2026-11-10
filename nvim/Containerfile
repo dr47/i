@@ -4,7 +4,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         neovim ca-certificates curl jq git rsync unzip \
         fontconfig ripgrep sqlite3 build-essential \
-        wl-clipboard fd-find shellcheck shfmt python3-pip tree-sitter-cli \
+        wl-clipboard fd-find shellcheck shfmt tree-sitter-cli \
+    && ln -s /usr/bin/fdfind /usr/local/bin/fd \
     && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --gid 1000 nvim \
@@ -24,8 +25,13 @@ RUN nvim --headless "+Lazy! sync" +qa
 
 RUN nvim --headless \
     -c "lua require('lazy').load({plugins={'mason.nvim'}})" \
-    -c "MasonInstall lua-language-server" \
+    -c "lua local ok, err = pcall(function() local p = require('mason-registry').get_package('lua-language-server'); if not p:is_installed() then local done = false; p:install(nil, function() done = true end); vim.wait(300000, function() return done end, 500) end end); if not ok then print(err); vim.cmd('cquit 1') end" \
     -c "lua if not require('mason-registry').get_package('lua-language-server'):is_installed() then vim.cmd('cquit 1') end" \
+    -c "qa"
+
+# Docasne - jen jako kontrola/workaround - pri spravne funkci predchozich kroku by nemel nic delat...
+RUN nvim --headless \
+    -c "lua local L = {'bash','javascript','markdown','markdown_inline','python','tsx','typescript','vim','vimdoc','yaml'}; for _, l in ipairs(L) do require('nvim-treesitter').install({ l }):wait(300000) end; local have = require('nvim-treesitter.config').get_installed(); for _, l in ipairs(L) do if not vim.list_contains(have, l) then print('missing: ' .. l); vim.cmd('cquit 1') end end" \
     -c "qa"
 
 CMD ["nvim"]

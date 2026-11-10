@@ -14,7 +14,7 @@ podman build \
 container=$(podman run -d --init localhost/nvim:work sleep infinity)
 trap 'podman rm -f "$container" >/dev/null' EXIT
 
-read -p "check :Mason , :checkhealth nvim-treesitter, then exit using :qa, abort :cq. (key)" dummy
+read -r -p "check :Mason , :checkhealth nvim-treesitter, then exit using :qa, abort :cq. (key)" dummy
 podman exec -it --user nvim "$container" nvim
 
 podman exec --user root "$container" sh -ec '
