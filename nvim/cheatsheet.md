@@ -3,57 +3,17 @@
 `_` = spacebar · `C` = Ctrl · `+` = press together.
 Sequences such as `C + ww` mean `Ctrl+w`, then `w`.
 
-## Chat
-
-| Shortcut | Action |
-| --- | --- |
-| `?` | Shortcuts |
-| `#` | Context |
-| `/` | Commands |
-| `C + s` | Send |
-| `ga` | Change model |
-| `/buffer` | Select buffer |
-| `/file` | Select file |
-| `/save` | Save chat |
-| `/resume` | Resume chat |
-| `/rename` | Rename chat |
-
-## Windows
-
-| Shortcut | Action |
-| --- | --- |
-| `C + w` | Help |
-| `C + ww` | Switch window |
-| `C + wx` | Swap windows |
-| `C + ←↓↑→` | Resize |
-| `_w` | Help |
-| `_wm` | Maximize / restore |
-
-## Files / buffers
-
-| Shortcut | Action |
-| --- | --- |
-| `__` | Open file |
-| `_f` | File/find help |
-| `_fB` | All buffers |
-| `_,` | Buffer list |
-| `H` / `L` | Previous / next |
-| `_b` | Help — unverified |
-| `_bd` | Delete buffer |
-
-### Editing
-
-| shortcut | Action |
-| --- | --- |
-| `:e` | Edit |
-| `za` | Toggle fold |
-
-## Sessions
-
-| Shortcut | Action |
-| --- | --- |
-| `_q` | Menu |
-| `_ql` | Load last session |
-| `_qS` | Select session |
+| Chat | | Okna | | Soubory | | Sessions | |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `?` | Shortcuts | `C + w` | Help | `__` | Open file | `_q` | Menu |
+| `#` | Context | `C + ww` | Switch window | `_f` | File/find help | `_ql` | Load last session |
+| `/` | Commands | `C + wx` | Swap windows | `_fB` | All buffers | `_qS` | Select session |
+| `C + s` | Send | `C + ←↓↑→` | Resize | `_,` | Buffer list | | |
+| `ga` | Change model | `_w` | Help | `H` / `L` | Previous / next | | |
+| `/buffer` | Select buffer | `_wm` | Maximize / restore | `_b` | Help — unverified | | |
+| `/file` | Select file | | | `_bd` | Delete buffer | | |
+| `/save` | Save chat | | | `:e` | Edit | | |
+| `/resume` | Resume chat | | | `za` | Toggle fold | | |
+| `/rename` | Rename chat | | | | | | |
 
 Save chat separately — it is not included in the Neovim session.
