@@ -22,6 +22,9 @@ STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/nvim-container"
 mkdir -p -- "$STATE_DIR"
 chmod 0700 -- "$STATE_DIR"
 
+SESSIONS_DIR="$STATE_DIR/codecompanion/sessions"
+mkdir -p -- "$SESSIONS_DIR"
+
 mounts=()
 paths=()
 cwd=/
@@ -60,6 +63,7 @@ exec podman run --rm -it --name nvim --hostname nvim \
     --env ANTHROPIC_API_KEY \
     --tmpfs /home/nvim/.cache:rw,nosuid,nodev,noexec,U,mode=0700,size=256m \
     --mount "type=bind,src=$STATE_DIR,dst=/home/nvim/.local/state/nvim" \
+    --mount "type=bind,src=$SESSIONS_DIR,dst=/home/nvim/.local/share/nvim/codecompanion/sessions" \
     "${mounts[@]}" \
     --workdir "$cwd" \
     localhost/nvim:stable \
