@@ -76,5 +76,5 @@ exec podman run --rm -it --name nvim --hostname nvim \
     --mount "type=bind,src=$SESSIONS_DIR,dst=/home/nvim/.local/share/nvim/codecompanion/sessions" \
     "${mounts[@]}" \
     --workdir "$cwd" \
-    localhost/nvim:stable \
+    hub.glow.cz/nvim:stable \
     nvim --cmd 'set backupcopy=yes nobackup nowritebackup' -- "${paths[@]}"

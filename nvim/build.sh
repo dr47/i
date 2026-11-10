@@ -28,9 +28,9 @@ podman exec --user root "$container" sh -ec '
 
 podman stop "$container"
 podman commit "$container" "localhost/nvim:$VERSION-$DATE"
-podman tag "localhost/nvim:$VERSION-$DATE" localhost/nvim:stable
+podman tag "localhost/nvim:$VERSION-$DATE" hub.glow.cz/nvim:stable
 read -p  "OK: localhost/nvim:$VERSION-$DATE (stable) Upload to hub? (CTRL-C to abort)" _
 
 podman login --username upload "$HUBW"
 podman push "localhost/nvim:$VERSION-$DATE" "$HUBW/nvim:$VERSION-$DATE"
-podman push "localhost/nvim:stable" "$HUBW/nvim:stable"
+podman push "hub.glow.cz/nvim:stable" "$HUBW/nvim:stable"
