@@ -16,6 +16,7 @@ Sequences such as `C + ww` mean `Ctrl+w`, then `w`.
 | `/file` | Select file |
 | `/save` | Save chat |
 | `/resume` | Resume chat |
+| /rename | Rename chat |
 
 ## Windows
 
