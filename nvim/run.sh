@@ -4,15 +4,19 @@ set -euo pipefail
 
 VERSION="0.10"
 
+CLAUDE="$HOME/.claude.key"
+
 fail() {
     printf 'run.sh: %s\n' "$*" >&2
     exit 1
 }
 
-[[ -f "$HOME/.claude" && -r "$HOME/.claude" ]] || fail "Chybí čitelný soubor: $HOME/.claude"
-source "$HOME/.claude"
-[[ -n "${ANTHROPIC_API_KEY:-}" ]] || fail "V ~/.claude chybí neprázdný ANTHROPIC_API_KEY"
+# Claude
+[[ -f "$CLAUDE" && -r "$CLAUDE" ]] || fail "Chybí čitelný soubor: $CLAUDE"
+ANTHROPIC_API_KEY=$(sed -n 's/^ANTHROPIC_API_KEY=//p' "$CLAUDE" | tail -n1 | tr -d "\"'")
+[[ -n "${ANTHROPIC_API_KEY:-}" ]] || fail "V ~/.claude.key chybí neprázdný ANTHROPIC_API_KEY"
 export ANTHROPIC_API_KEY
+
 
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/nvim-container"
 mkdir -p -- "$STATE_DIR"
@@ -58,5 +62,5 @@ exec podman run --rm -it --name nvim --hostname nvim \
     --mount "type=bind,src=$STATE_DIR,dst=/home/nvim/.local/state/nvim" \
     "${mounts[@]}" \
     --workdir "$cwd" \
-    localhost/nvim:dev \
+    localhost/nvim:stable \
     nvim --cmd 'set backupcopy=yes nobackup nowritebackup' -- "${paths[@]}"
