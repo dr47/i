@@ -4,6 +4,8 @@ set -euo pipefail
 VERSION="0.9.0"
 DATE=$(date +%Y%m%d)
 
+HUBW="hubw.glow.cz"
+
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 podman build \
@@ -25,6 +27,10 @@ podman exec --user root "$container" sh -ec '
 '
 
 podman stop "$container"
-podman commit "$container" localhost/nvim:$VERSION-$DATE
-podman tag localhost/nvim:$VERSION-$DATE localhost/nvim:stable
-echo "OK: localhost/nvim:$VERSION-$DATE (stable)"
+podman commit "$container" "localhost/nvim:$VERSION-$DATE"
+podman tag "localhost/nvim:$VERSION-$DATE" localhost/nvim:stable
+read -p  "OK: localhost/nvim:$VERSION-$DATE (stable) Upload to hub? (CTRL-C to abort)" _
+
+podman login --username upload "$HUBW"
+podman push "localhost/nvim:$VERSION-$DATE" "$HUBW/nvim:$VERSION-$DATE"
+podman push "localhost/nvim:stable" "$HUBW/nvim:stable"
