@@ -16,6 +16,7 @@ Sequences such as `C + ww` mean `Ctrl+w`, then `w`.
 | `/resume` | Resume chat | | | | | | |
 | `/rename` | Rename chat | | | | | | |
 | `@{run_command}` | RUN  | | | | | | |
+| `F` on command | details | | | | | | |
 | `gty` | change police   | | | | | | |
 
 Save chat separately — it is not included in the Neovim session.
